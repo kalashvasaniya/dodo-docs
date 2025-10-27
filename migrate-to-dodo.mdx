@@ -6,7 +6,7 @@ icon: "arrow-right-arrow-left"
 
 **Switching from another payment provider to Dodo Payments?** Our migration tool makes it easy to move your **products, customers, and discount codes without losing any data.** The process is safe, guided, and can be done in just a few minutes.
 
-We currently support migrations from **Lemon Squeezy, Stripe and Polar.sh**.
+We currently support migrations from **Lemon Squeezy, Stripe, Polar.sh, and Paddle**.
 
 ### Supported Migrations
 
@@ -54,8 +54,14 @@ dodo-migrate stripe
 dodo-migrate polar
 ```
 
+### If you're coming from Paddle:
+
+```bash
+dodo-migrate paddle
+```
+
 The tool will walk you through everything step by step. You'll need:
-- Your provider's API key (Lemon Squeezy, Stripe, Polar.sh, etc.)
+- Your provider's API key (Lemon Squeezy, Stripe, Polar.sh, Paddle, etc.)
 - Your Dodo Payments API key  
 - Whether you want to test first (recommended) or go live
 - Which Dodo Payments brand to migrate to
@@ -103,12 +109,23 @@ dodo-migrate polar \
   --migrate-types=products,discounts,customers
 ```
 
+### Paddle migration:
+
+```bash
+dodo-migrate paddle \
+  --provider-api-key=paddle_XXXXXXXXXXXXXXXX \
+  --dodo-api-key=dp_XXXXXXXXXXXXXXXX \
+  --mode=test_mode \
+  --dodo-brand-id=brand_XXXXXX
+```
+
 ## Need Help?
 
 - **Tool help**: `dodo-migrate --help`
 - **Lemon Squeezy help**: `dodo-migrate lemonsqueezy --help`
 - **Stripe help**: `dodo-migrate stripe --help`
 - **Polar.sh help**: `dodo-migrate polar --help`
+- **Paddle help**: `dodo-migrate paddle --help`
 - **Community support**: [Discord](https://discord.gg/bYqAp4ayYh)
 - **Report issues**: [GitHub](https://github.com/dodopayments/dodo-migrate)
 
