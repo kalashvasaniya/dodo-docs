@@ -266,7 +266,8 @@
             "group": "Checkout Sessions",
             "tag": "NEW",
             "pages": [
-              "api-reference/checkout-sessions/create"
+              "api-reference/checkout-sessions/create",
+              "api-reference/checkout-sessions/get-checkouts"
             ]
           },
           {
@@ -491,6 +492,12 @@
             "group": "Changelog",
             "pages": [
               "changelog/introduction"
+            ]
+          },
+          {
+            "group": "October 2025",
+            "pages": [
+              "changelog/v1.56.0"
             ]
           },
           {

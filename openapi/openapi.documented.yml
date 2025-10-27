@@ -5,7 +5,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
-  version: 1.55.7
+  version: 1.56.2
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -1437,6 +1437,121 @@ paths:
 
 
             puts(checkout_session_response)
+  /checkouts/{id}:
+    get:
+      tags:
+        - Checkout Sessions
+      operationId: get_checkout_sessions_status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Checkout session successfully fetched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCheckoutSessionsStatus'
+        '404':
+          description: Not found
+        '422':
+          description: Invalid Request Object or Parameters
+        '500':
+          description: Something went wrong :(
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: 'My Bearer Token',
+            });
+
+            const checkoutSessionStatus = await client.checkoutSessions.retrieve('id');
+
+            console.log(checkoutSessionStatus.id);
+        - lang: Python
+          source: |-
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token="My Bearer Token",
+            )
+            checkout_session_status = client.checkout_sessions.retrieve(
+                "id",
+            )
+            print(checkout_session_status.id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"),
+              )
+              checkoutSessionStatus, err := client.CheckoutSessions.Get(context.TODO(), "id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", checkoutSessionStatus.ID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.checkoutsessions.CheckoutSessionRetrieveParams;
+            import com.dodopayments.api.models.checkoutsessions.CheckoutSessionStatus;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    CheckoutSessionStatus checkoutSessionStatus = client.checkoutSessions().retrieve("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.checkoutsessions.CheckoutSessionRetrieveParams
+            import com.dodopayments.api.models.checkoutsessions.CheckoutSessionStatus
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val checkoutSessionStatus: CheckoutSessionStatus = client.checkoutSessions().retrieve("id")
+            }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token",
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            checkout_session_status = dodo_payments.checkout_sessions.retrieve("id")
+
+            puts(checkout_session_status)
   /customers:
     get:
       tags:
@@ -12339,6 +12454,45 @@ components:
           minItems: 1
       title: FilterType
       description: 'Filter type - supports up to 3 levels of nesting (Level 1: conditions or Level 2 filters)'
+    GetCheckoutSessionsStatus:
+      type: object
+      required:
+        - id
+        - created_at
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: Created at timestamp
+        customer_email:
+          type:
+            - string
+            - 'null'
+          description: "Customer email: prefers payment's customer, falls back to session"
+        customer_name:
+          type:
+            - string
+            - 'null'
+          description: "Customer name: prefers payment's customer, falls back to session"
+        id:
+          type: string
+          description: Id of the checkout session
+        payment_id:
+          type:
+            - string
+            - 'null'
+          description: |-
+            Id of the payment created by the checkout sessions.
+
+            Null if checkout sessions is still at the details collection stage.
+        payment_status:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/IntentStatus'
+              description: |-
+                status of the payment.
+
+                Null if checkout sessions is still at the details collection stage.
     GetCustomersListResponse:
       type: object
       required:
@@ -13747,6 +13901,10 @@ components:
             - boolean
             - 'null'
           description: When set, the subscription will remain active until the end of billing period
+        customer_name:
+          type:
+            - string
+            - 'null'
         disable_on_demand:
           oneOf:
             - type: 'null'
@@ -14937,7 +15095,7 @@ tags:
   - name: Outgoing Webhooks
   - name: Checkout
   - name: Webhook Events
-x-webhooks:
+webhooks:
   dispute.accepted:
     post:
       description: Sent when a dispute is accepted
