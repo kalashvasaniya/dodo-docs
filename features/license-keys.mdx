@@ -98,6 +98,10 @@ You can perform the following actions on license keys:
 
 Use these APIs to activate, validate, list, and update license keys and their activation instances.
 
+<Info>
+**Public Endpoints**: The activate, deactivate, and validate license endpoints are **public** and do **not require an API key**. This allows you to call them directly from your client applications, desktop software, or CLIs without exposing your API credentials.
+</Info>
+
 <AccordionGroup>
 <Accordion title="Lifecycle Operations">
 Trigger activation, deactivation, and validation actions on license keys.
@@ -158,33 +162,57 @@ Revoke or update device information for an instance.
 
 ### Activate a license
 
+<Note>
+These endpoints do not require an API key and can be called directly from your client applications.
+</Note>
+
 <CodeGroup>
-```Typescript Node.js
+```typescript TypeScript/Node.js
 import DodoPayments from 'dodopayments';
 
-const client = new DodoPayments({
-  bearerToken: 'My Bearer Token',
+// No API key needed for public license endpoints
+const client = new DodoPayments();
+
+const response = await client.licenses.activate({ 
+  license_key: 'license_key', 
+  name: 'Device Name' 
 });
 
-const response = await client.licenses.activate({ license_key: 'license_key', name: 'name' });
-
 console.log(response.id);
+```
+
+```bash cURL
+curl -X POST https://api.dodopayments.com/licenses/activate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "license_key": "your_license_key",
+    "name": "Device Name"
+  }'
 ```
 </CodeGroup>
 
 ### Validate a license
 
 <CodeGroup>
-```Typescript Node.js
+```typescript TypeScript/Node.js
 import DodoPayments from 'dodopayments';
 
-const client = new DodoPayments({
-  bearerToken: 'My Bearer Token',
+// No API key needed for public license endpoints
+const client = new DodoPayments();
+
+const response = await client.licenses.validate({ 
+  license_key: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43' 
 });
 
-const response = await client.licenses.validate({ license_key: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43' });
-
 console.log(response.valid);
+```
+
+```bash cURL
+curl -X POST https://api.dodopayments.com/licenses/validate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "license_key": "2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43"
+  }'
 ```
 </CodeGroup>
 
