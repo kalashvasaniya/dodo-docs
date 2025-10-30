@@ -175,13 +175,13 @@
                     ]
                   },
                   {
-                    "group": "Webhook Examples",
-                    "icon": "code",
+                    "group": "Deploy to Cloud",
+                    "icon": "rocket",
                     "pages": [
+                      "developer-resources/webhooks/examples/vercel-example",
                       "developer-resources/webhooks/examples/cloudflare-example",
-                      "developer-resources/webhooks/examples/netlify-example",
                       "developer-resources/webhooks/examples/supabase-example",
-                      "developer-resources/webhooks/examples/vercel-example"
+                      "developer-resources/webhooks/examples/netlify-example"
                     ]
                   }
                 ]
