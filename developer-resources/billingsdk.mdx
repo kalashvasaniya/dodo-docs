@@ -1,0 +1,226 @@
+---
+title: 'Billing SDK'
+description: 'Complete billing infrastructure for modern web applications with React components, CLI tooling, and full-stack integration'
+icon: "boxes-stacked"
+---
+
+<Frame>
+  <iframe 
+        className="w-full aspect-video rounded-md" 
+        src="https://www.youtube.com/embed/32RVbEllEi0"
+        title="Billing SDK | Dodo Payments"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+    ></iframe>
+</Frame>
+
+Billing SDK is a comprehensive open-source solution that provides complete billing infrastructure for modern web applications. It includes React components, CLI tooling, and full-stack integration support for multiple frameworks with Dodo Payments.
+
+## Overview
+
+Billing SDK offers:
+
+- **React Components**: Pre-built, customizable billing components for React applications
+- **CLI Tooling**: Command-line interface for project initialization and component management
+- **Framework Support**: Integration with Next.js, Express.js, Hono, Fastify, and React
+- **Payment Provider**: Full integration with Dodo Payments
+
+## Quick Start
+
+Get started with Billing SDK in minutes:
+
+<Steps>
+<Step title="Install the CLI">
+  Use npx to run the CLI without installation:
+  
+  ```bash
+  npx @billingsdk/cli --help
+  ```
+  
+  Or install it globally for frequent use:
+  
+  ```bash
+  npm install -g @billingsdk/cli
+  ```
+</Step>
+
+<Step title="Initialize a Project">
+  Run the interactive setup to create a new billing project:
+  
+  ```bash
+  npx @billingsdk/cli init
+  ```
+  
+  You'll be prompted to select:
+  - Your preferred framework (Next.js, Express.js, Hono, Fastify, React)
+  - Your payment provider (Dodo Payments)
+</Step>
+
+<Step title="Add Components">
+  Add individual billing components to your project:
+  
+  ```bash
+  npx @billingsdk/cli add pricing-table-one
+  npx @billingsdk/cli add subscription-management
+  ```
+</Step>
+</Steps>
+
+## Supported Frameworks
+
+Billing SDK supports multiple frameworks with comprehensive Dodo Payments integration:
+
+| Framework | Dodo Payments |
+| ---------- | ------------- |
+| Next.js | ✅ Yes |
+| Express.js | ✅ Yes |
+| Hono | ✅ Yes |
+| React | ✅ Yes |
+| Fastify | ✅ Yes |
+
+## CLI Commands
+
+### `@billingsdk/cli init`
+
+Initialize a new billing project with complete setup including framework configuration, Dodo Payments integration, and essential dependencies.
+
+**What it does:**
+
+1. **Framework Selection**: Choose your preferred framework
+2. **Template Installation**: Downloads and installs framework-specific templates with Dodo Payments integration
+3. **Dependency Management**: Automatically installs required dependencies
+4. **File Generation**: Creates necessary configuration files and boilerplate code
+
+**Example:**
+
+```bash
+npx @billingsdk/cli init
+```
+
+### `@billingsdk/cli add`
+
+Add individual billing components to your existing project using the shadcn/ui registry system.
+
+**Examples:**
+
+```bash
+# Add a pricing table
+npx @billingsdk/cli add pricing-table-one
+
+# Add subscription management
+npx @billingsdk/cli add subscription-management
+
+# Add usage monitoring
+npx @billingsdk/cli add usage-meter-circle
+```
+
+**What happens:**
+
+1. Downloads the component configuration from the registry
+2. Installs the component files in your `components/billingsdk/` directory
+3. Updates your project configuration if needed
+4. Installs any additional dependencies
+
+## Generated Files Structure
+
+After running `init`, you'll get a complete project structure with:
+
+- **API Routes**: Comprehensive endpoints for checkout, customers, products, subscriptions, and webhooks
+- **Hooks**: React hooks for billing operations (if using React/Next.js)
+- **Library Files**: Payment provider client initialization and utilities
+- **Environment Configuration**: Example environment variable files
+
+### Next.js Example Structure
+
+```
+your-project/
+├── app/api/
+│   └── (dodopayments)/
+│       ├── checkout/route.ts
+│       ├── customer/route.ts
+│       ├── customer/payments/route.ts
+│       ├── customer/subscriptions/route.ts
+│       ├── product/route.ts
+│       ├── products/route.ts
+│       └── webhook/route.ts
+├── hooks/
+│   └── useBilling.ts
+├── lib/
+│   └── dodopayments.ts
+└── .env.example
+```
+
+## Environment Configuration
+
+Configure your environment variables after initialization:
+
+```bash
+# DodoPayments
+DODO_PAYMENTS_API_KEY=your_api_key_here
+DODO_PAYMENTS_ENVIRONMENT=test_mode
+DODO_PAYMENTS_WEBHOOK_KEY=your_webhook_key_here
+
+# App URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+<Warning>
+Always store your API keys securely using environment variables. Never commit them to version control.
+</Warning>
+
+## Available Components
+
+Billing SDK provides a comprehensive collection of React components:
+
+- **Pricing Tables**: Multiple variants for displaying product pricing
+- **Subscription Management**: Components for managing customer subscriptions
+- **Usage Monitoring**: Visual components for tracking usage-based billing
+- **Checkout Components**: Pre-built checkout flows
+- **Customer Portal**: Components for customer self-service
+
+## Open Source
+
+Billing SDK is built on open-source principles:
+
+- 🔍 **Transparency**: Full visibility into how components work
+- 🤝 **Community**: Built by developers, for developers
+- 🔒 **Security**: Open code means better security through peer review
+- 📈 **Innovation**: Faster iteration through community contributions
+
+<Info>
+Billing SDK is released under the GNU General Public License (GPL), ensuring the project remains open and free.
+</Info>
+
+## Getting Help
+
+Need assistance with Billing SDK?
+
+- **GitHub Issues**: [Open an issue](https://github.com/dodopayments/billingsdk/issues)
+- **Documentation**: Visit [billingsdk.com/docs](https://billingsdk.com/docs)
+- **LLMs Full Documentation**: [billingsdk.com/llms-full.txt](https://billingsdk.com/llms-full.txt)
+
+## Contributing
+
+We welcome contributions! See our [contribution guide](https://billingsdk.com/docs/contribution-open-source) for details on:
+
+- Reporting bugs
+- Requesting features
+- Submitting pull requests
+- Adding new components
+- Improving documentation
+
+## Learn More
+
+<CardGroup cols={3}>
+  <Card title="Full Documentation" icon="book" href="https://billingsdk.com/docs">
+    Complete guide to Billing SDK with examples and best practices
+  </Card>
+  <Card title="CLI Reference" icon="terminal" href="https://billingsdk.com/docs/cli">
+    Detailed CLI documentation for all commands and options
+  </Card>
+  <Card title="Component Library" icon="boxes-stacked" href="https://billingsdk.com/docs/components">
+    Browse all available components with live examples
+  </Card>
+</CardGroup>
+
