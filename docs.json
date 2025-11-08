@@ -280,7 +280,7 @@
       },
       {
         "tab": "API Reference",
-        "icon": "brackets-curly",
+        "icon": "rectangle-code",
         "groups": [
           {
             "group": "API Reference",
@@ -514,7 +514,7 @@
       },
       {
         "tab": "Changelog",
-        "icon": "cash-register",
+        "icon": "calendar-days",
         "groups": [
           {
             "group": "Changelog",
