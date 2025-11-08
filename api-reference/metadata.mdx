@@ -33,6 +33,17 @@ You can add metadata when creating or updating objects through the API. For prod
 ### Via API
 
 ```javascript
+// Adding metadata when creating a customer
+const customer = await client.customers.create({
+    name: 'John Doe',
+    email: 'john@example.com',
+    metadata: {
+        account_tier: 'premium',
+        signup_source: 'website',
+        referral_code: 'REF123'
+    }
+});
+
 // Adding metadata when creating a payment
 const payment = await client.payments.create({
     billing: { city: 'city', country: 'AF', state: 'state', street: 'street', zipcode: 0 },
@@ -71,6 +82,11 @@ Using the dashboard UI for product metadata is particularly useful for non-techn
 Metadata is included in API responses when retrieving objects:
 
 ```javascript
+// Retrieving customer metadata
+const customer = await client.customers.retrieve('cus_123');
+console.log(customer.metadata.account_tier); // 'premium'
+
+// Retrieving payment metadata
 const payment = await client.payments.retrieve('pay_123');
 console.log(payment.metadata.order_id); // '6735'
 ```
@@ -84,6 +100,15 @@ While metadata is not directly searchable via our API, you can:
 3. Filter the results in your application code
 
 ```javascript
+// Example: Find a customer using metadata
+const customers = await client.customers.list({
+  limit: 100
+});
+
+const matchingCustomer = customers.data.find(
+  customer => customer.metadata?.account_tier === 'premium'
+);
+
 // Example: Find a payment using your order ID
 const payments = await client.payments.list({
   limit: 100
@@ -116,6 +141,7 @@ Metadata is supported on the following objects:
 
 | Object Type | Support |
 |------------|---------|
+| Customers | ✓ |
 | Payments | ✓ |
 | Subscriptions | ✓ |
 | Products | ✓ |
@@ -132,6 +158,11 @@ app.post('/webhook', (req, res) => {
   if (event.type === 'payment.succeeded') {
     const orderId = event.data.object.metadata.order_id;
     // Process order using your internal order ID
+  }
+  
+  if (event.type === 'customer.created') {
+    const accountTier = event.data.object.metadata.account_tier;
+    // Handle customer creation with custom metadata
   }
 });
 ```
