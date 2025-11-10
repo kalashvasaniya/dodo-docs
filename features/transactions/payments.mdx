@@ -36,6 +36,33 @@ The Payments listing page provides a record of all the payments that have taken 
 
 Upon clicking a payment in the listing, merchants are directed to the **Payment Details Page**, which provides a comprehensive breakdown of the transaction
 
+### Successful payment
+
+<Frame caption="Example of a successfully captured card payment">
+<img src="/images/transactions/payments/successful-payment.png" alt="Payment details page showing a successful payment with green status and transaction breakdown" />
+</Frame>
+
+- **Status**: Shows as **Successful** at the top with the final captured amount.
+- **Transaction details**: Displays `Payment ID`, `Payment date`, `Payment method`, and `Settlement amount`.
+- **Card information**: Card network, last four, issuing country, and type.
+- **Customer details**: Name, email, and billing info.
+- **Product cart**: Product IDs and quantities purchased.
+- **Actions**: You can generate the invoice or initiate a refund from the top-right.
+
+### Failed payment
+
+<Frame caption="Example of a failed card payment with decline information">
+<img src="/images/transactions/payments/failed-payment.png" alt="Payment details page showing a failed payment with red error banner, decline error code and message" />
+</Frame>
+
+- **Status**: Shows as **Failed** with a red banner.
+- **Error context**: Includes the gateway `Error Code` and human-readable `Error Message` (for example, `INSUFFICIENT_FUNDS` – “Your card was declined”).
+- **Other information**: The error fields are repeated in the details section for quick reference.
+- **Next steps**:
+  - Retry the payment with a different card or funding source.
+  - Verify card details and available funds.
+  - If the decline persists, contact the issuer and try again.
+
 
 ## **Important Information**
 
