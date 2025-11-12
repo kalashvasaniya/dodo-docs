@@ -220,6 +220,94 @@ All official SDKs include built‑in helpers to securely validate and parse inco
   Provide your webhook secret via `DODO_PAYMENTS_WEBHOOK_KEY` when initializing the Dodo Payments client.
 </Tip>
 
+<CodeGroup>
+```typescript TypeScript/Node.js
+import DodoPayments from 'dodopayments';
+import express from 'express';
+
+const app = express();
+app.use(express.raw({ type: 'application/json' }));
+
+const client = new DodoPayments({
+  bearerToken: process.env.DODO_PAYMENTS_API_KEY,
+  environment: process.env.DODO_PAYMENTS_ENVIRONMENT,
+  webhookKey: process.env.DODO_PAYMENTS_WEBHOOK_KEY,
+});
+
+app.post('/webhook', async (req, res) => {
+  try {
+    const unwrapped = client.webhooks.unwrap(req.body.toString(), {
+      headers: {
+        'webhook-id': req.headers['webhook-id'] as string,
+        'webhook-signature': req.headers['webhook-signature'] as string,
+        'webhook-timestamp': req.headers['webhook-timestamp'] as string,
+      },
+    });
+    res.json({ received: true });
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid signature' });
+  }
+});
+```
+
+```python Python
+from fastapi import FastAPI, Request, HTTPException
+from dodopayments import DodoPayments
+import os
+
+app = FastAPI()
+client = DodoPayments(
+    bearer_token=os.getenv("DODO_PAYMENTS_API_KEY"),
+    environment=os.getenv("DODO_PAYMENTS_ENVIRONMENT"),
+    webhook_key=os.getenv("DODO_PAYMENTS_WEBHOOK_KEY"),
+)
+
+@app.post("/webhook")
+async def handle_webhook(request: Request):
+    try:
+        unwrapped = client.webhooks.unwrap(
+            await request.body(),
+            headers={
+                "webhook-id": request.headers.get("webhook-id", ""),
+                "webhook-signature": request.headers.get("webhook-signature", ""),
+                "webhook-timestamp": request.headers.get("webhook-timestamp", ""),
+            },
+        )
+        return {"received": True}
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid signature")
+```
+
+```go Go
+import (
+	"context"
+	"io"
+	"net/http"
+	"os"
+	"github.com/dodopayments/dodopayments-go"
+	"github.com/dodopayments/dodopayments-go/option"
+)
+
+func webhookHandler(w http.ResponseWriter, r *http.Request) {
+	client := dodopayments.NewClient(
+		option.WithBearerToken(os.Getenv("DODO_PAYMENTS_API_KEY")),
+		option.WithEnvironment(os.Getenv("DODO_PAYMENTS_ENVIRONMENT")),
+		option.WithWebhookKey(os.Getenv("DODO_PAYMENTS_WEBHOOK_KEY")),
+	)
+	rawBody, _ := io.ReadAll(r.Body)
+	if _, err := client.Webhooks.Unwrap(context.Background(), rawBody, map[string]string{
+		"webhook-id":       r.Header.Get("webhook-id"),
+		"webhook-signature": r.Header.Get("webhook-signature"),
+		"webhook-timestamp": r.Header.Get("webhook-timestamp"),
+	}); err != nil {
+		http.Error(w, "Invalid signature", http.StatusUnauthorized)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
+```
+</CodeGroup>
+
 #### Manual verification (alternative)
 
 If you are not using an SDK, you can verify signatures yourself following the Standard Webhooks spec:
