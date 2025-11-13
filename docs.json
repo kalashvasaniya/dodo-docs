@@ -200,6 +200,7 @@
                 "group": "Boilerplates",
                 "icon": "box-open",
                 "pages": [
+                  "developer-resources/expo-boilerplate",
                   "developer-resources/supabase-boilerplate",
                   "integrations/figma-plugin",
                   "developer-resources/nextjs-boilerplate",
