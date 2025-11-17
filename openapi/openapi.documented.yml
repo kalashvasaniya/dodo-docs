@@ -5,7 +5,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
-  version: 1.60.0
+  version: 1.61.5
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -9235,8 +9235,8 @@ paths:
                 context.TODO(),
                 "subscription_id",
                 dodopayments.SubscriptionUpdatePaymentMethodParams{
-                  Body: dodopayments.SubscriptionUpdatePaymentMethodParamsBodyObject{
-                    Type: dodopayments.F(dodopayments.SubscriptionUpdatePaymentMethodParamsBodyObjectTypeNew),
+                  Body: dodopayments.SubscriptionUpdatePaymentMethodParamsBodyNew{
+                    Type: dodopayments.F(dodopayments.SubscriptionUpdatePaymentMethodParamsBodyNewTypeNew),
                   },
                 },
               )
@@ -9262,8 +9262,8 @@ paths:
 
                     SubscriptionUpdatePaymentMethodParams params = SubscriptionUpdatePaymentMethodParams.builder()
                         .subscriptionId("subscription_id")
-                        .body(SubscriptionUpdatePaymentMethodParams.Body.UnionMember0.builder()
-                            .type(SubscriptionUpdatePaymentMethodParams.Body.UnionMember0.Type.NEW)
+                        .body(SubscriptionUpdatePaymentMethodParams.Body.New.builder()
+                            .type(SubscriptionUpdatePaymentMethodParams.Body.New.Type.NEW)
                             .build())
                         .build();
                     SubscriptionUpdatePaymentMethodResponse response = client.subscriptions().updatePaymentMethod(params);
@@ -9283,8 +9283,8 @@ paths:
 
                 val params: SubscriptionUpdatePaymentMethodParams = SubscriptionUpdatePaymentMethodParams.builder()
                     .subscriptionId("subscription_id")
-                    .body(SubscriptionUpdatePaymentMethodParams.Body.UnionMember0.builder()
-                        .type(SubscriptionUpdatePaymentMethodParams.Body.UnionMember0.Type.NEW)
+                    .body(SubscriptionUpdatePaymentMethodParams.Body.New.builder()
+                        .type(SubscriptionUpdatePaymentMethodParams.Body.New.Type.NEW)
                         .build())
                     .build()
                 val response: SubscriptionUpdatePaymentMethodResponse = client.subscriptions().updatePaymentMethod(params)
@@ -10888,24 +10888,6 @@ components:
       enum:
         - and
         - or
-    ConnectorMandateInformation:
-      type: object
-      required:
-        - connector_mandate_id
-        - original_payment_authorized_amount
-        - original_payment_authorized_currency
-      properties:
-        connector_mandate_id:
-          type: string
-        original_payment_authorized_amount:
-          type: integer
-          format: int64
-        original_payment_authorized_currency:
-          $ref: '#/components/schemas/Currency'
-        payment_method_type:
-          oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/PaymentMethodTypes'
     CountryCodeAlpha2:
       type: string
       description: ISO country code alpha2 variant
@@ -12199,19 +12181,11 @@ components:
       required:
         - payment_method_id
         - payment_method
-        - connector_payment_methods
-        - profile_map
       properties:
         card:
           oneOf:
             - type: 'null'
             - $ref: '#/components/schemas/CustomerPaymentMethodCardSummary'
-        connector_payment_methods:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ConnectorMandateInformation'
-          propertyNames:
-            type: string
         last_used_at:
           type:
             - string
@@ -12221,12 +12195,10 @@ components:
           $ref: '#/components/schemas/PaymentMethod'
         payment_method_id:
           type: string
-        profile_map:
-          type: object
-          additionalProperties:
-            type: string
-          propertyNames:
-            type: string
+        payment_method_type:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/PaymentMethodTypes'
         recurring_enabled:
           type:
             - boolean
@@ -15267,6 +15239,7 @@ components:
     UpdatePaymentMethodReq:
       oneOf:
         - type: object
+          title: New
           required:
             - type
           properties:
@@ -15279,6 +15252,7 @@ components:
               enum:
                 - new
         - type: object
+          title: Existing
           required:
             - payment_method_id
             - type
