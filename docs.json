@@ -485,6 +485,7 @@
           {
             "group": "Workflow Automation",
             "pages": [
+              "integrations/n8n",
               "integrations/zapier",
               "integrations/windmill",
               "integrations/inngest"

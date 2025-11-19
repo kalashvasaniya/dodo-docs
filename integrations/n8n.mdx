@@ -1,15 +1,15 @@
 ---
-title: "Zapier"
-description: "Connect Dodo Payments to 5000+ apps through Zapier webhooks for unlimited automation possibilities."
-icon: "bolt"
+title: "N8N"
+description: "Integrate Dodo Payments with N8N to automate workflows and connect with over 5,000 apps using webhooks—power powerful, customizable automation in self-hosted or cloud N8N environments."
+icon: "diagram-project"
 ---
 
 ## Introduction
 
-Connect Dodo Payments to thousands of apps and services through Zapier. Automate workflows by triggering Zaps when payment events occur, from sending emails to updating spreadsheets, creating tasks, and much more.
+Connect Dodo Payments to thousands of apps and services through N8N. Automate workflows by triggering N8N workflows when payment events occur, from sending emails to updating spreadsheets, creating tasks, database operations, and much more.
 
 <Info>
-This integration requires a Zapier webhook URL from your Zap configuration.
+This integration requires an N8N webhook URL from your workflow configuration.
 </Info>
 
 ## Getting Started
@@ -18,32 +18,36 @@ This integration requires a Zapier webhook URL from your Zap configuration.
 <Step title="Open the Webhook Section">
   In your Dodo Payments dashboard, navigate to <b>Webhooks → + Add Endpoint</b> and expand the integrations dropdown.
   <Frame>
-    <img src="/images/integrations/zapier.png" alt="Add Endpoint and integrations dropdown" />
+    <img src="/images/integrations/n8n.png" alt="Add Endpoint and integrations dropdown" />
   </Frame>
 </Step>
 
-<Step title="Select Zapier">
-  Choose the <b>Zapier</b> integration card.
+<Step title="Select N8N">
+  Choose the <b>N8N</b> integration card.
 </Step>
 
-<Step title="Create Zap in Zapier">
-  In Zapier, create a new Zap with "Webhooks by Zapier" as the trigger. Copy the webhook URL.
+<Step title="Create Webhook in N8N">
+  In N8N, create a new workflow and add a <b>Webhook</b> node as the trigger. Configure it as a POST webhook and copy the webhook URL.
 </Step>
 
 <Step title="Paste Webhook URL">
-  Paste the Zapier webhook URL into the endpoint configuration.
+  Paste the N8N webhook URL into the endpoint configuration.
 </Step>
 
 <Step title="Configure Transformation">
-  Edit the transformation code to format data for your Zapier workflow.
+  Edit the transformation code to format data for your N8N workflow.
 </Step>
 
 <Step title="Test & Create">
   Test with sample payloads and click <b>Create</b> to activate the integration.
 </Step>
 
+<Step title="Activate Workflow">
+  In N8N, activate your workflow to start receiving webhook events.
+</Step>
+
 <Step title="Done!">
-  🎉 Payment events will now trigger your Zapier workflows automatically.
+  🎉 Payment events will now trigger your N8N workflows automatically.
 </Step>
 </Steps>
 
@@ -126,14 +130,15 @@ function handler(webhook) {
 }
 ```
 
-## Popular Zapier Use Cases
+## Popular N8N Use Cases
 
 <AccordionGroup>
 <Accordion title="Email Notifications">
 - Send Gmail/Outlook emails for payment confirmations
 - Create email sequences in Mailchimp/ConvertKit
-- Send Slack/Discord notifications
-- Create Google Sheets records
+- Send Slack/Discord notifications via webhooks
+- Create Google Sheets records automatically
+- Send Telegram/WhatsApp messages
 </Accordion>
 
 <Accordion title="CRM Updates">
@@ -141,38 +146,65 @@ function handler(webhook) {
 - Create deals in Pipedrive/Close
 - Update customer records in Airtable
 - Log activities in Monday.com
+- Sync data to PostgreSQL/MySQL databases
 </Accordion>
 
 <Accordion title="Task Management">
 - Create tasks in Asana/Trello
 - Add to-do items in Notion
-- Create calendar events
+- Create calendar events in Google Calendar
 - Send SMS notifications via Twilio
+- Create GitHub issues for disputes
+</Accordion>
+
+<Accordion title="Data Processing">
+- Transform and enrich payment data
+- Store events in databases (PostgreSQL, MongoDB)
+- Aggregate metrics and analytics
+- Generate reports and exports
+- Trigger complex multi-step workflows
 </Accordion>
 </AccordionGroup>
 
 ## Tips
 
-- Keep payload structure simple for easy Zapier parsing
+- Keep payload structure simple for easy N8N node parsing
 - Use consistent field names across all events
-- Include timestamps for workflow timing
-- Test your Zap with sample data before going live
-- Use Zapier's built-in filters for conditional logic
+- Include timestamps for workflow timing and scheduling
+- Test your workflow with sample data before activating
+- Use N8N's IF node for conditional logic and routing
+- Leverage N8N's Code node for custom data transformations
+- Use the Switch node to route different event types to different paths
+- Set up error workflows to handle failed webhook deliveries
 
 ## Troubleshooting
 
 <AccordionGroup>
-<Accordion title="Zap not triggering">
-- Verify webhook URL is correct and active
-- Check that Zap is turned on in Zapier
-- Ensure payload structure matches Zapier expectations
-- Test webhook delivery in Zapier dashboard
+<Accordion title="Workflow not triggering">
+- Verify webhook URL is correct and accessible
+- Check that workflow is activated in N8N
+- Ensure webhook node is configured as POST method
+- Test webhook delivery in N8N's execution history
+- Verify firewall/network settings allow incoming webhooks
+- Check N8N webhook authentication settings if configured
 </Accordion>
 
 <Accordion title="Data not mapping correctly">
-- Check field names in Zapier action steps
-- Verify data types match expected formats
-- Use Zapier's test feature to debug mapping
+- Check field names in N8N node configurations
+- Verify data types match expected formats in nodes
+- Use N8N's test feature to inspect incoming data
 - Ensure transformation code returns valid JSON
+- Check the webhook node's response format settings
+- Use the Set node to rename or restructure fields
 </Accordion>
-</AccordionGroup> 
+
+<Accordion title="Workflow execution errors">
+- Review execution logs in N8N for detailed error messages
+- Check node connection settings and credentials
+- Verify all required fields are present in the payload
+- Test individual nodes with sample data
+- Enable error workflows to catch and handle failures
+- Check rate limits and API quotas for connected services
+</Accordion>
+</AccordionGroup>
+
