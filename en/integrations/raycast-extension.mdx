@@ -1,0 +1,159 @@
+---
+title: "Raycast Extension"
+description: "Install the Raycast extension to browse and manage Dodo Payments resources from your keyboard."
+icon: "puzzle-piece"
+---
+
+<Frame>
+  <img
+    src="/images/integrations/raycast/dodo-payments-commands.png"
+    alt="Raycast extension home showing Dodo Payments commands"
+  />
+</Frame>
+
+Your Dodo Payments dashboard, a few keystrokes away. Use Raycast to quickly view payments, subscriptions, customers, products, discount codes, license keys, and refunds without opening the dashboard.
+
+## Install
+
+<Card title="Install from Raycast Store →" icon="puzzle-piece" href="https://www.raycast.com/dodopayments/dodo-payments">
+  Open the Dodo Payments extension page in the Raycast Store.
+</Card>
+
+<Info>
+Requires Raycast on macOS and a Dodo Payments API key.
+</Info>
+
+## Setup
+
+<Steps>
+<Step title="Get your API Key">
+1. Log in to your Dodo Payments dashboard.
+2. Go to Settings › API Keys.
+3. Copy your API key.
+</Step>
+
+<Step title="Configure the Extension">
+1. Open Raycast.
+2. Search for "Dodo Payments" and select any command.
+3. When prompted, enter your API key in the API Key field.
+4. Choose the API mode:
+   - Test: use for development and testing.
+   - Live: use for production data.
+5. Save the settings.
+</Step>
+</Steps>
+
+<Tip>
+Start in Test mode to validate your setup, then switch to Live.
+</Tip>
+
+<Warning>
+Treat your API key like a password. Do not share it or store it in plaintext.
+</Warning>
+
+## Use the extension
+
+- **Search**: open Raycast, type "Dodo Payments", and pick a command.
+- **Filter**: narrow results by typing parts of IDs, emails, names, or statuses.
+- **Open details**: press Enter on a list item to view more information.
+
+## Commands and views
+
+### Payments
+
+Browse recent payments and jump into detailed views in seconds.
+
+<Frame>
+  <img
+    src="/images/integrations/raycast/view-payments.png"
+    alt="Payments list view in the Raycast extension"
+  />
+</Frame>
+
+### Subscriptions
+
+Quickly scan active, trialing, and canceled subscriptions.
+
+<Frame>
+  <img
+    src="/images/integrations/raycast/view-subscriptions.png"
+    alt="Subscriptions list view in the Raycast extension"
+  />
+</Frame>
+
+### Customers
+
+Find customers fast and open full profiles.
+
+<Frame>
+  <img
+    src="/images/integrations/raycast/view-customers.png"
+    alt="Customers list view in the Raycast extension"
+  />
+</Frame>
+
+### Products
+
+Review and manage your product catalog at a glance.
+
+<Frame>
+  <img
+    src="/images/integrations/raycast/view-products.png"
+    alt="Products list view in the Raycast extension"
+  />
+</Frame>
+
+### Discount Codes
+
+Search and reference active discount codes quickly.
+
+<Frame>
+  <img
+    src="/images/integrations/raycast/view-discount-codes.png"
+    alt="Discount codes list view in the Raycast extension"
+  />
+</Frame>
+
+### License Keys
+
+Look up and manage license keys without leaving Raycast.
+
+<Frame>
+  <img
+    src="/images/integrations/raycast/view-license-keys.png"
+    alt="License keys list view in the Raycast extension"
+  />
+</Frame>
+
+### Refunds
+
+See recent refunds and drill into their details.
+
+<Frame>
+  <img
+    src="/images/integrations/raycast/view-refunds.png"
+    alt="Refunds list view in the Raycast extension"
+  />
+</Frame>
+
+<Info>
+Additional live-only views: disputes and payouts.
+</Info>
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Authentication failed or 401/403 errors">
+Confirm the API key and mode (Test vs Live) match your dashboard data. Reopen the command and re-enter the key if needed.
+</Accordion>
+<Accordion title="No results appear">
+Ensure your selected mode has data. Try switching between Test and Live.
+</Accordion>
+<Accordion title="Rate limits or timeouts">
+Wait a moment and try again. If the issue persists, check your network connectivity.
+</Accordion>
+</AccordionGroup>
+
+<Card title="Need help? Contact support →" icon="life-ring" href="/miscellaneous/help-support">
+  Get assistance from the Dodo Payments team.
+</Card>

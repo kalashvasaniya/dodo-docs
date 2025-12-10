@@ -1,0 +1,435 @@
+---
+title: Payment Methods
+description: Complete guide to payment methods supported by Dodo Payments, including credit/debit cards, digital wallets, BNPL, Paypal, UPI/Rupay, European options, and how to configure them for your checkout.
+icon: "credit-card"
+---
+
+Dodo Payments supports a wide range of payment methods to help you serve customers globally. All listed payment methods become available automatically once your merchant account is verified and live mode is enabled.
+
+<Info>
+**Automatic Activation:** No additional configuration is needed from your side. All payment methods are pre-configured and managed by Dodo Payments. You can optionally restrict which methods appear at checkout using the API configuration described below.
+</Info>
+
+## Supported Payment Methods
+
+The following table provides a quick reference for all available payment methods, their regional availability, and key limitations:
+
+| Payment Method           | Supported Countries   | Supported Currencies | Supports Subscription |
+| :----------------------- | :------------------- | :------------------- | :------------------- |
+| **Credit Cards**         | Global               | All currencies       | Yes                  |
+| **Debit Cards**          | Global               | All currencies       | Yes                  |
+| **Apple Pay**            | Global (Excl. IN)    | All currencies       | Yes                  |
+| **Google Pay**           | Global (Excl. IN)    | All currencies       | Yes                  |
+| **Amazon Pay**           | Global (Excl. IN)    | USD                  | No                   |
+| **Cash App Pay**         | US                   | USD                  | No                   |
+| **Afterpay (BNPL)**      | US, UK               | USD, GBP             | No                   |
+| **Klarna (BNPL)**        | US, Europe*          | USD, EUR, GBP, DKK, NOK, SEK, CZK, RON, PLN, CHF | No                   |
+| **PayPal**               | Global               | EUR, GBP             | No                   |
+| **UPI**                  | India                | INR                  | Yes*                 |
+| **Rupay (Credit/Debit)** | India                | INR                  | Yes*                 |
+| **Bancontact**           | Belgium              | EUR                  | No                   |
+| **EPS**                  | Austria              | EUR                  | No                   |
+| **iDEAL**                | Netherlands          | EUR                  | No                   |
+| **Multibanco**           | Portugal             | EUR                  | No                   |
+
+<Note>
+Each transaction must meet the <strong>minimum amount required for each currency</strong>. For USD, the minimum is <strong>0.50 USD</strong>. Minimums for other currencies vary by region.
+[See Supported Currencies &amp; Minimums](/features/adaptive-currency#supported-currencies)
+</Note>
+
+<Note>
+Klarna and Afterpay require a minimum transaction amount of <strong>50.01 USD</strong> (or equivalent in supported currencies) for eligibility at checkout. Transactions below this threshold will not be eligible for these BNPL payment options. 
+
+For details on Klarna's supported countries, refer to the <a href="#buy-now-pay-later-bnpl">BNPL section</a> below.
+</Note>
+
+<Note>
+<strong>Indian Payment Methods:</strong> UPI and Rupay subscriptions are supported with RBI-compliant mandates. See the <a href="#upi-and-rupay-india">UPI and Rupay section</a> for important details about one-time payment restrictions, mandate limits, and processing delays.
+</Note>
+
+## Payment Method Details
+
+<AccordionGroup>
+
+<Accordion title="Credit and Debit Cards">
+  Dodo Payments accepts all major credit and debit card networks globally. You can accept:
+
+  - **Visa** – Reliable, widely accepted global network
+  - **Mastercard** – Robust, secure network with global reach
+  - **American Express** – Premium benefits and strong customer service
+  - **Discover** – Competitive rewards, strong US presence
+  - **JCB** – Leading Asian card network with expanding reach
+  - **UnionPay** – Dominant in China and Asia, with growing global acceptance
+  - **Interac** – Canada's secure debit payment network
+  - **Cartes Bancaires** – Widely used across France
+  - **Diners Club** – Premium international card with exclusive benefits
+  - **Korean Local Cards** – Support for Korean domestic card networks
+</Accordion>
+
+<Accordion title="Digital Wallets">
+  Offer customers a fast and secure checkout using digital wallets:
+
+  - **Apple Pay** – Pay easily on iOS, macOS, and watchOS
+  - **Google Pay** – Secure payments on Android, web, and in-store
+  - **PayPal** – Global payments in EUR and GBP (not available for subscriptions)
+  - **Cash App Pay** – Mobile payments for US customers (not available for subscriptions)
+  - **Amazon Pay** – Use Amazon credentials for a simple checkout (not available for subscriptions)
+</Accordion>
+
+<Accordion title="Buy Now Pay Later (BNPL)">
+  Increase conversion by offering flexible installment options:
+
+  - **Klarna** – Enable flexible payments with Klarna’s options: pay in 4 installments, pay in 30 days, or finance your purchase. Klarna is available in the US and 19 European countries, including Austria, Belgium, Czech Republic, Denmark, Finland, France, Germany, Greece, Ireland, Italy, Netherlands, Norway, Poland, Portugal, Romania, Spain, Sweden, Switzerland, and the United Kingdom. Supported currencies include USD, EUR, GBP, DKK, NOK, SEK, CZK, RON, PLN, and CHF.
+  - **Afterpay** – Allow customers to split purchases into four interest-free payments. Afterpay is available in the US and UK, supporting payments in USD and GBP.
+</Accordion>
+
+<Accordion title="UPI and Rupay (India)" id="upi-and-rupay-india">
+  Accept leading Indian payment options:
+
+  - **UPI** – Customers scan a QR code or use apps (Google Pay, PhonePe, Paytm, CRED) for instant, contactless bank transfers
+  - **Rupay Cards** – Secure credit and debit payments via India's domestic card network
+
+  ### Subscriptions with RBI-Compliant Mandates
+
+  UPI and Indian card subscriptions operate under RBI (Reserve Bank of India) regulations with specific mandate requirements:
+
+  #### Mandate Limits
+
+  The mandate type and amount depend on your subscription's recurring charge:
+
+  - **Charges below ₹15,000:** We create an on-demand mandate for ₹15,000 INR. The subscription amount is charged periodically according to your subscription frequency, up to the mandate limit.
+  - **Charges ₹15,000 or above:** We create a subscription mandate (or on-demand mandate) for the exact subscription amount.
+
+  #### Upgrade and Downgrade Considerations
+
+  <Warning>
+  **Important:** When upgrading or downgrading subscriptions, carefully consider the mandate limits:
+
+  - If an upgrade/downgrade results in a charge amount that exceeds ₹15,000 and goes beyond the existing on-demand payment limit, the transaction charge may fail.
+  - In such cases, the customer may need to update their payment method or change the subscription again to establish a new mandate with the correct limit.
+  </Warning>
+
+  #### Authorization for High-Value Charges
+
+  For subscription charges of ₹15,000 or more:
+
+  - The customer will be prompted by their bank to authorize the transaction.
+  - If the customer fails to authorize the transaction, the transaction will fail and the subscription will be put on hold.
+
+  #### 48-Hour Processing Delay
+
+  <Info>
+  **Processing Timeline:** Recurring charges on Indian cards and UPI subscriptions follow a unique processing pattern:
+
+  - Charges are **initiated** on the scheduled date according to your subscription frequency.
+  - The actual **deduction** from the customer's account occurs only after **48 hours** from payment initiation.
+  - This 48-hour window may extend up to **2-3 additional hours** depending on bank API responses.
+  </Info>
+
+  #### Mandate Cancellation Window
+
+  During the 48-hour processing window:
+
+  - Customers can cancel the mandate via their banking apps.
+  - If a customer cancels the mandate during this period, the subscription will remain **active** (this is an edge case specific to Indian card and UPI AutoPay subscriptions).
+  - However, the actual deduction may fail, and in that case, we will put the subscription **on hold**.
+
+  <Warning>
+  **Edge Case Handling:** If you provide benefits, credits, or subscription usage to customers immediately upon charge initiation, you need to handle this 48-hour window appropriately in your application. Consider:
+
+  - Delaying benefit activation until payment confirmation
+  - Implementing grace periods or temporary access
+  - Monitoring subscription status for mandate cancellations
+  - Handling subscription hold states in your application logic
+  </Warning>
+
+  <Tip>
+  Monitor subscription webhooks to track payment status changes and handle edge cases where mandates are cancelled during the 48-hour window.
+  </Tip>
+
+</Accordion>
+
+<Accordion title="European Payment Methods">
+  Offer localized European options to increase conversions:
+
+  - **iDEAL** (Netherlands) – Instant Dutch online bank payments
+  - **Bancontact** (Belgium) – Belgium's trusted debit card method
+  - **Multibanco** (Portugal) – Portuguese payment method for bank transfers and ATM payments
+  - **EPS** (Austria) – Direct online banking payments in Austria
+
+</Accordion>
+
+</AccordionGroup>
+
+
+## Configuring Payment Methods
+
+While all payment methods are automatically available based on customer location and currency, you can optionally restrict which payment options appear during checkout using the `allowed_payment_method_types` parameter.
+
+### When to Configure Payment Methods
+
+You may want to configure allowed payment methods to:
+
+- Control which payment options appear to customers based on your business requirements
+- Restrict payment methods for specific product types or transaction flows
+- Maintain consistency across different payment experiences
+- Optimize checkout experience for your target audience
+
+### Implementation
+
+<Steps>
+<Step title="Add parameter to API request">
+Include the `allowed_payment_method_types` field in your payment or subscription creation request:
+
+```json
+{
+  "allowed_payment_method_types": [
+    "credit",
+    "debit",
+    "apple_pay"
+  ]
+}
+```
+</Step>
+
+<Step title="Test the configuration">
+Verify that only the specified payment methods appear at checkout.
+
+<Tip>
+Test payment method availability with different customer locations and currencies to ensure the configuration works as expected.
+</Tip>
+</Step>
+</Steps>
+
+### API Endpoints
+
+This configuration is supported by the following endpoints:
+
+<CardGroup cols={3}>
+  <Card title="Create Checkout Session" icon="cart-shopping" href="/api-reference/checkout-sessions/create">
+    Create checkout sessions with allowed payment methods.
+  </Card>
+  <Card title="Create Payment" icon="credit-card" href="/api-reference/payments/post-payments">
+    One-time payments with allowed methods.
+  </Card>
+  <Card title="Create Subscription" icon="repeat" href="/api-reference/subscriptions/post-subscriptions">
+    Subscription payments with recurring methods.
+  </Card>
+</CardGroup>
+
+### Implementation Examples
+
+<Tabs>
+<Tab title="One-Time Payment">
+```json
+{
+  "amount": 1000,
+  "currency": "usd",
+  "allowed_payment_method_types": [
+    "credit",
+    "debit",
+    "apple_pay",
+    "google_pay"
+  ]
+}
+```
+</Tab>
+
+<Tab title="Subscription">
+```json
+{
+  "product_id": "prod_123",
+  "customer_id": "cust_456",
+  "allowed_payment_method_types": [
+    "credit",
+    "debit"
+  ]
+}
+```
+</Tab>
+
+<Tab title="Regional Focus">
+```json
+{
+  "amount": 5000,
+  "currency": "eur",
+  "allowed_payment_method_types": [
+    "credit",
+    "debit",
+    "ideal",
+    "bancontact",
+    "sepa"
+  ]
+}
+```
+</Tab>
+</Tabs>
+
+### Best Practices
+
+<AccordionGroup>
+<Accordion title="Default behavior">
+If `allowed_payment_method_types` is not specified, all eligible payment methods will be available based on customer location, currency, and transaction type. Only use this parameter when you need to restrict payment methods.
+</Accordion>
+
+<Accordion title="Regional considerations">
+Consider your target market when selecting payment methods. Including region-specific options (like UPI for India or iDEAL for Netherlands) can significantly improve conversion rates in those markets.
+</Accordion>
+
+<Accordion title="Monitor and optimize">
+Track which payment methods your customers use most frequently and adjust your allowed methods based on actual usage patterns and conversion data.
+</Accordion>
+</AccordionGroup>
+
+### Important Considerations
+
+Payment method availability depends on multiple factors:
+- **Customer Location**: Some payment methods are region-specific
+- **Merchant Settings**: Your account configuration and capabilities
+- **Currency**: Supported payment methods vary by currency
+- **Transaction Type**: Some methods don't support subscriptions or have minimum amounts
+
+<Note>
+Adding a payment method to `allowed_payment_method_types` doesn't guarantee it will appear - it must also be eligible based on these factors.
+</Note>
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Payment method not appearing at checkout">
+**Possible causes:**
+- The payment method is not included in `allowed_payment_method_types`
+- The payment method is not supported for the customer's location
+- The payment method doesn't support the transaction currency
+- For subscriptions: the payment method doesn't support recurring payments
+- The transaction amount is below the minimum threshold (e.g., BNPL methods)
+
+**Solution:** Verify all eligibility requirements are met and check your API request configuration.
+</Accordion>
+
+<Accordion title="Unexpected payment methods appearing">
+**Possible causes:**
+- The `allowed_payment_method_types` parameter is not being passed correctly
+- There may be conflicting configurations in your merchant dashboard
+
+**Solution:** Review your API request payload and ensure the parameter is properly formatted as an array of strings.
+</Accordion>
+
+<Accordion title="Regional payment method not available">
+**Possible causes:**
+- The customer's location doesn't match the payment method's supported region
+- The currency is not supported by the regional payment method
+- Your merchant account may not be enabled for that specific payment method
+
+**Solution:** Verify regional and currency compatibility, and contact support if you believe the method should be available.
+</Accordion>
+
+<Accordion title="Indian payment method subscription issues">
+**Subscription charge failed after upgrade/downgrade:**
+- The new charge amount may exceed the existing mandate limit (₹15,000 threshold)
+- Customer may need to update their payment method to establish a new mandate
+
+**Solution:** Prompt the customer to update their payment method or adjust the subscription amount to stay within mandate limits.
+
+**Subscription on hold after charge initiation:**
+- Customer may have cancelled the mandate during the 48-hour processing window
+- Customer may have failed to authorize a high-value charge (≥₹15,000)
+
+**Solution:** Monitor webhook events for mandate cancellations and payment failures. Implement retry logic or prompt customers to re-establish their payment method.
+
+**Payment deduction delayed:**
+- Normal behavior: Indian card and UPI subscriptions have a 48-hour delay between charge initiation and actual deduction
+- This delay may extend up to 2-3 additional hours depending on bank APIs
+
+**Solution:** This is expected behavior. Do not activate benefits or credits until payment confirmation is received via webhooks.
+</Accordion>
+
+<Accordion title="Updating payment methods for subscriptions">
+**When to update payment methods:**
+- Customer's card expires or is replaced
+- Customer wants to use a different payment method
+- Subscription is in `on_hold` state due to failed payment
+- Payment method needs to be changed for any reason
+
+**For active subscriptions:**
+Updating the payment method for an active subscription simply updates the payment method for future renewals. No immediate charge is created.
+
+**For on_hold subscriptions:**
+When a subscription is in `on_hold` state (due to failed renewal or failed plan change charge), updating the payment method will:
+- Automatically create a charge for remaining dues
+- Generate an invoice for the charge
+- Process the payment using the new payment method
+- Reactivate the subscription to `active` state upon successful payment
+
+<CodeGroup>
+```javascript Node.js
+// Update payment method for active subscription
+await client.subscriptions.updatePaymentMethod('sub_123', {
+  type: 'new',
+  return_url: 'https://example.com/return'
+});
+
+// Or use existing payment method
+await client.subscriptions.updatePaymentMethod('sub_123', {
+  type: 'existing',
+  payment_method_id: 'pm_abc123'
+});
+
+// For on_hold subscription - automatically creates charge
+const response = await client.subscriptions.updatePaymentMethod('sub_123', {
+  type: 'new',
+  return_url: 'https://example.com/return'
+});
+
+if (response.payment_id) {
+  // Charge created for remaining dues
+  // Redirect customer to response.payment_link
+  // Monitor webhooks: payment.succeeded → subscription.active
+}
+```
+
+```python Python
+# Update payment method for active subscription
+client.subscriptions.update_payment_method(
+    subscription_id="sub_123",
+    type="new",
+    return_url="https://example.com/return"
+)
+
+# Or use existing payment method
+client.subscriptions.update_payment_method(
+    subscription_id="sub_123",
+    type="existing",
+    payment_method_id="pm_abc123"
+)
+
+# For on_hold subscription - automatically creates charge
+response = client.subscriptions.update_payment_method(
+    subscription_id="sub_123",
+    type="new",
+    return_url="https://example.com/return"
+)
+
+if response.payment_id:
+    # Charge created for remaining dues
+    # Redirect customer to response.payment_link
+    # Monitor webhooks: payment.succeeded → subscription.active
+```
+</CodeGroup>
+
+**Webhook events:**
+- For `on_hold` subscriptions: You'll receive `payment.succeeded` followed by `subscription.active` after successful payment method update
+- Monitor these events to track subscription reactivation status
+
+<Card title="Update Payment Method API Reference" icon="code" href="/api-reference/subscriptions/update-payment-method">
+View the complete API documentation for updating payment methods.
+</Card>
+
+<Card title="Subscription States" icon="info-circle" href="/features/subscription">
+Learn more about subscription states including active and on_hold.
+</Card>
+</Accordion>
+</AccordionGroup>
+
+## Expanding Payment Options
+We continuously add new payment methods to Dodo Payments. This page will be updated as more options become available. If you require a specific payment method not listed here, please contact us at [support@dodopayments.com](mailto:support@dodopayments.com), and we'll consider adding it to our roadmap.
